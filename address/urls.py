@@ -1,7 +1,7 @@
-from rest_framework import serializers
+from django.urls import path
 
+from address.views import AddressView, put_address_view
 
-class UserSerializer(serializers.Serializer):
-    uuid = serializers.CharField(read_only=True)
-    email = serializers.EmailField()
-    password = serializers.CharField(write_only=True)
+urlpatterns = [
+    path("address/", put_address_view)
+]

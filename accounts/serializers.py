@@ -8,3 +8,8 @@ class AccountsSerializer(serializers.Serializer):
     email = serializers.CharField()
     password = serializers.CharField(write_only=True)
     is_admin = serializers.BooleanField(required=False)
+
+
+class LoginSerializer(serializers.Serializer):
+    email = serializers.CharField()
+    password = serializers.CharField()

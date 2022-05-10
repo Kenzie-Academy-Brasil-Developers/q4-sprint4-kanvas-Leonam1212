@@ -11,6 +11,3 @@ class Address(models.Model):
     zip_code = models.CharField(max_length=255)
     country = models.CharField(max_length=255)
 
-    accounts = models.ForeignKey(
-        "accounts.Accounts", on_delete=models.CASCADE, related_name="address"
-    )

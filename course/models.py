@@ -8,5 +8,5 @@ class Course(models.Model):
     demo_time = models.TimeField()
     created_at = models.DateField(auto_now_add=True)
     link_repo = models.CharField(max_length=255)
-
-    account = models.ManyToManyField("accounts.Accounts", related_name="courses")
+    instructor = models.Field()
+    students = models.ManyToManyField("accounts.Accounts", related_name="courses")
