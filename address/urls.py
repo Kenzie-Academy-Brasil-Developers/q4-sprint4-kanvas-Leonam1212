@@ -1,7 +1,7 @@
 from django.urls import path
 
-from address.views import AddressView, put_address_view
+from address.views import AddressView
 
 urlpatterns = [
-    path("address/", put_address_view)
+    path("address/", AddressView.as_view())
 ]

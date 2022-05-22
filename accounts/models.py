@@ -1,3 +1,4 @@
+from calendar import c
 from uuid import uuid4
 from django.contrib.auth.models import AbstractUser
 from django.db import models
@@ -13,9 +14,10 @@ class Accounts(AbstractUser):
 
     username = models.CharField(unique=False, null=True, max_length=255)
 
-    address = models.ForeignKey("address.Address", on_delete=models.CASCADE, related_name="users")
+    address = models.ForeignKey("address.Address", null=True, on_delete=models.CASCADE, related_name="users")
     
-    course = models.OneToOneField("course.Course", null=True, on_delete=models.CASCADE)
-   
+    # courses = models.ManyToManyField("course.Course", null=True, related_name="students")
+
+
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []

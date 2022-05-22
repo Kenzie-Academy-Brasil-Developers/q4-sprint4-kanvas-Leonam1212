@@ -8,6 +8,7 @@ from rest_framework.status import (
     HTTP_201_CREATED,
     HTTP_401_UNAUTHORIZED,
     HTTP_409_CONFLICT,
+    HTTP_422_UNPROCESSABLE_ENTITY
 )
 
 from rest_framework.authtoken.models import Token
@@ -46,7 +47,7 @@ class AccountsView(APIView):
         ).exists()
 
         if found_user:
-            return Response({"message": "User already exists"}, HTTP_409_CONFLICT)
+            return Response({"message": "User already exists"}, HTTP_422_UNPROCESSABLE_ENTITY)
 
         user = Accounts.objects.create(**serializer.validated_data)
         user.set_password(serializer.validated_data["password"])

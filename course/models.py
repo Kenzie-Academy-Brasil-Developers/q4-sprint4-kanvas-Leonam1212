@@ -8,5 +8,7 @@ class Course(models.Model):
     demo_time = models.TimeField()
     created_at = models.DateField(auto_now_add=True)
     link_repo = models.CharField(max_length=255)
-    instructor = models.Field()
-    students = models.ManyToManyField("accounts.Accounts", related_name="courses")
+    
+    instructor = models.OneToOneField("accounts.Accounts", null=True, on_delete=models.CASCADE, related_name = "course")
+
+    students = models.ManyToManyField("accounts.Accounts", related_name = "courses")

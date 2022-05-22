@@ -24,22 +24,22 @@ class AddressView(APIView):
     authentication_classes = [TokenAuthentication]
 
     def put(self, request: Request):
-        serializer =  AddressSerializer(data=request.data)
+        serializer = AddressSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
+        print(serializer.validated_data)
+        found_zip_code = Address.objects.filter(
+            zip_code=serializer.validated_data["zip_code"]
+        ).exists()
+
+        if found_zip_code:
+            return Response({"message": "Zip code already exists"}, HTTP_409_CONFLICT)
+
+        address = Address.objects.create(**serializer.validated_data)
+
+        request.user.address = address
+        request.user.save()
         
+        serializer = AddressSerializer(address)
 
-
-@api_view(["PUT"])
-@authentication_classes([TokenAuthentication])
-@permission_classes([IsAuthenticated])
-def put_address_view(request: Request):
-    serializer = AddressSerializer(data=request.data)
-    serializer.is_valid(raise_exception=True)
-
-    serializer.users_id = request.user.uuid
-    print(serializer)
-    address = Address.objects.create(**serializer.validated_data)
-
-
-    return Response(address, HTTP_200_OK)
+        return Response(serializer.data, HTTP_200_OK)
